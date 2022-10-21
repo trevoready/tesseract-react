@@ -1,14 +1,25 @@
 import React from "react";
 import Signup from "./Signup";
 import { Container } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { AuthProvider } from "../contexts/AuthContext";
+import {Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
+import Messages from "./Messages";
+import Signin from "./Signin";
 function App() {
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh"}}>
-      <div className="w-100" style={{maxWidth:"400px"}}>
-        <Signup />
-      </div>
-    </Container>
+      
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/messages" element={
+          <ProtectedRoute>
+            <Messages />
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </AuthProvider>
   );
 }
 
